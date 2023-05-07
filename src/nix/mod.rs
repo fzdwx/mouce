@@ -93,7 +93,6 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
     // Create a thread for handling the callbacks
     thread::spawn(move || {
         for received in rx {
-            println!("get input event {:?}", received);
             // Construct the library's MouseEvent
             let r#type = received.r#type as i32;
             let code = received.code as i32;
@@ -135,8 +134,6 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
                 // Ignore other unknown events
                 continue;
             };
-
-            println!("get mouse event {:?}", mouse_event);
 
             // Invoke all given callbacks with the constructed mouse event
             for callback in callbacks.lock().unwrap().values() {
