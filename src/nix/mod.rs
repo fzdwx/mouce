@@ -136,6 +136,8 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
                 continue;
             };
 
+            println!("get mouse event {:?}", mouse_event);
+
             // Invoke all given callbacks with the constructed mouse event
             for callback in callbacks.lock().unwrap().values() {
                 callback(&mouse_event);
