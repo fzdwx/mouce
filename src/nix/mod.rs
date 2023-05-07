@@ -94,7 +94,6 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
     }
 
     let callbacks = callbacks.clone();
-    let values = Arc::new(Mutex::new(callbacks.lock().unwrap().deref().clone()));
     // Create a thread for handling the callbacks
     thread::spawn(move || {
         println!("2start_nix_listener: callback len: {}", callbacks.lock().unwrap().len());
@@ -142,7 +141,7 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
             };
 
             // Invoke all given callbacks with the constructed mouse event
-            for c in values.lock().unwrap().values() {
+            for c in callbacks.lock().unwrap().values() {
                 c(&mouse_event);
             }
         }
