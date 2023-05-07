@@ -135,9 +135,11 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
                 continue;
             };
 
+            println!("x111111");
             // Invoke all given callbacks with the constructed mouse event
             for callback in callbacks.lock().unwrap().values() {
                 callback(&mouse_event);
+                println!("x222222");
             }
         }
     });
