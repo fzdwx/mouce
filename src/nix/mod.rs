@@ -19,7 +19,7 @@ use std::thread;
 #[cfg(feature = "x11")]
 use std::{process::Command, str::from_utf8};
 #[cfg(feature = "x11")]
-mod x11;
+pub mod x11;
 
 mod uinput;
 
