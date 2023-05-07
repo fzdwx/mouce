@@ -137,6 +137,7 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
 
             // Invoke all given callbacks with the constructed mouse event
             for callback in callbacks.lock().unwrap().values() {
+                println!("Invoking callback send event: {:?}", mouse_event);
                 callback(&mouse_event);
             }
         }
