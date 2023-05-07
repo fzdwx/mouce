@@ -54,6 +54,7 @@ impl NixMouseManager {
 
 /// Start the event listener for nix systems
 fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
+    println!("start_nix_listener: callback len: {}", callbacks.lock().unwrap().len());
     let (tx, rx) = mpsc::channel();
 
     // Read all the mouse events listed under /dev/input/by-id

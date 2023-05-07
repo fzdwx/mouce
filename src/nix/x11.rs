@@ -116,12 +116,6 @@ impl MouseActions for X11MouseManager {
         println!("Hooked callback with id: {}", id);
         self.callback_counter += 1;
 
-        let guard = self.callbacks.lock().unwrap();
-        let values = guard.values();
-        let i = values.len();
-        println!("Number of callbacks: {}", i);
-
-
         if !self.is_listening {
             super::start_nix_listener(&self.callbacks)?;
             self.is_listening = true;
