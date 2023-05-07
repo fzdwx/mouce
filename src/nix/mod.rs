@@ -73,6 +73,8 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
             Err(_) => return Err(Error::PermissionDenied),
         };
 
+        println!("asdasd event: {:?}", event);
+
         // Create a thread for this mouse-event file
         let tx = tx.clone();
         thread::spawn(move || loop {
