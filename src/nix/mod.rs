@@ -93,6 +93,7 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
     // Create a thread for handling the callbacks
     thread::spawn(move || {
         for received in rx {
+            println!("get input event {:?}", received);
             // Construct the library's MouseEvent
             let r#type = received.r#type as i32;
             let code = received.code as i32;
