@@ -54,7 +54,6 @@ impl NixMouseManager {
 
 /// Start the event listener for nix systems
 fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
-    println!("start_nix_listener");
     let (tx, rx) = mpsc::channel();
 
     // Read all the mouse events listed under /dev/input/by-id
@@ -66,14 +65,10 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
             .display()
             .to_string();
 
-        println!("read from path: {}", path);
-
         let event = match File::options().read(true).open(path) {
             Ok(file) => file,
             Err(_) => return Err(Error::PermissionDenied),
         };
-
-        println!("asdasd event: {:?}", event);
 
         // Create a thread for this mouse-event file
         let tx = tx.clone();
@@ -87,11 +82,9 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
                 code: 0,
                 value: 0,
             };
-            println!("start read buffer: {:?}", buffer);
             unsafe {
                 read(event.as_raw_fd(), &mut buffer, size_of::<InputEvent>());
             }
-            println!("get buffer: {:?}", buffer);
             tx.send(buffer).unwrap();
         });
     }
@@ -99,7 +92,6 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
     let callbacks = callbacks.clone();
     // Create a thread for handling the callbacks
     thread::spawn(move || {
-        println!("x000000");
         for received in rx {
             // Construct the library's MouseEvent
             let r#type = received.r#type as i32;
@@ -143,11 +135,9 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
                 continue;
             };
 
-            println!("x111111");
             // Invoke all given callbacks with the constructed mouse event
             for callback in callbacks.lock().unwrap().values() {
                 callback(&mouse_event);
-                println!("x222222");
             }
         }
     });
