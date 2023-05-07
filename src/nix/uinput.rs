@@ -268,7 +268,7 @@ struct InputId {
 }
 
 #[repr(C)]
-#[derive(Clone,Default,Debug)]
+#[derive(Clone,Debug)]
 pub struct InputEvent {
     pub time: TimeVal,
     pub r#type: u16,
@@ -277,6 +277,7 @@ pub struct InputEvent {
 }
 
 #[repr(C)]
+#[derive(Clone,Debug)]
 pub struct TimeVal {
     pub tv_sec: c_ulong,
     pub tv_usec: c_ulong,
