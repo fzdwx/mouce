@@ -268,6 +268,7 @@ struct InputId {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone,Default,Debug)]
 pub struct InputEvent {
     pub time: TimeVal,
     pub r#type: u16,

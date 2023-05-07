@@ -85,9 +85,11 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
                 code: 0,
                 value: 0,
             };
+            println!("start read buffer: {:?}", buffer);
             unsafe {
                 read(event.as_raw_fd(), &mut buffer, size_of::<InputEvent>());
             }
+            println!("get buffer: {:?}", buffer);
             tx.send(buffer).unwrap();
         });
     }
