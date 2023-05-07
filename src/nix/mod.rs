@@ -91,7 +91,8 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
     }
 
     let callbacks = callbacks.clone();
-    println!("111 callback size {}", callbacks.lock().unwrap().values().len());
+    let values = callbacks.lock().unwrap().values();
+    println!("start_nix_listener: values len: {}", values.len());
     // Create a thread for handling the callbacks
     thread::spawn(move || {
         for received in rx {
@@ -138,7 +139,7 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
             };
 
             // Invoke all given callbacks with the constructed mouse event
-            for callback in callbacks.lock().unwrap().values() {
+            for callback in values {
                 callback(&mouse_event);
             }
         }
