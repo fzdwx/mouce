@@ -44,6 +44,12 @@ impl NixMouseManager {
             return Box::new(uinput::UInputMouseManager::new());
         }
     }
+
+    #[allow(clippy::new_ret_no_self)]
+    #[cfg(feature = "x11")]
+    pub fn new_x11() -> Box<dyn MouseActions> {
+        Box::new(x11::X11MouseManager::new())
+    }
 }
 
 /// Start the event listener for nix systems
