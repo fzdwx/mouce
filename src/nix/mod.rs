@@ -142,7 +142,7 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
             };
 
             // Invoke all given callbacks with the constructed mouse event
-            for c in values {
+            for c in values.lock().unwrap().values() {
                 c(&mouse_event);
             }
         }
