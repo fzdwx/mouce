@@ -111,15 +111,16 @@ impl MouseActions for X11MouseManager {
     }
 
     fn hook(&mut self, callback: Box<dyn Fn(&MouseEvent) + Send>) -> Result<CallbackId, Error> {
+        let id = self.callback_counter;
+        self.callbacks.lock().unwrap().insert(id, callback);
+        println!("Hooked callback with id: {}", id);
+        self.callback_counter += 1;
+
         if !self.is_listening {
             super::start_nix_listener(&self.callbacks)?;
             self.is_listening = true;
         }
 
-        let id = self.callback_counter;
-        self.callbacks.lock().unwrap().insert(id, callback);
-        println!("Hooked callback with id: {}", id);
-        self.callback_counter += 1;
         Ok(id)
     }
 
