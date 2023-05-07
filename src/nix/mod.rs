@@ -18,6 +18,7 @@ use std::thread;
 
 #[cfg(feature = "x11")]
 use std::{process::Command, str::from_utf8};
+use std::ops::Deref;
 use std::sync::atomic::Ordering::AcqRel;
 
 #[cfg(feature = "x11")]
@@ -93,7 +94,8 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
     }
 
     let callbacks = callbacks.clone();
-    println!("start_nix_listener: callback len: {}", callbacks.lock().unwrap().len());
+    let guard1 = callbacks.lock().unwrap().deref();
+    println!("1start_nix_listener: callback len: {}", guard1.len());
     // Create a thread for handling the callbacks
     thread::spawn(move || {
         println!("2start_nix_listener: callback len: {}", callbacks.lock().unwrap().len());
