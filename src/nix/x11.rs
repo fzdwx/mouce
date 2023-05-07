@@ -118,6 +118,7 @@ impl MouseActions for X11MouseManager {
 
         let id = self.callback_counter;
         self.callbacks.lock().unwrap().insert(id, callback);
+        println!("Hooked callback with id: {}", id);
         self.callback_counter += 1;
         Ok(id)
     }
