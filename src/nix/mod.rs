@@ -94,7 +94,7 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
     }
 
     let callbacks = callbacks.clone();
-    let guard1 = callbacks.lock().unwrap().deref();
+    let guard1 = callbacks.lock().unwrap().deref().clone();
     println!("1start_nix_listener: callback len: {}", guard1.len());
     // Create a thread for handling the callbacks
     thread::spawn(move || {
