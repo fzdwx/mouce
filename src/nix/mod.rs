@@ -66,6 +66,8 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
             .display()
             .to_string();
 
+        println!("read from path: {}", path);
+
         let event = match File::options().read(true).open(path) {
             Ok(file) => file,
             Err(_) => return Err(Error::PermissionDenied),
