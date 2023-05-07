@@ -93,8 +93,10 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
     }
 
     let callbacks = callbacks.clone();
+    println!("start_nix_listener: callback len: {}", callbacks.lock().unwrap().len());
     // Create a thread for handling the callbacks
     thread::spawn(move || {
+        println!("2start_nix_listener: callback len: {}", callbacks.lock().unwrap().len());
         for received in rx {
             // Construct the library's MouseEvent
             let r#type = received.r#type as i32;
@@ -143,7 +145,6 @@ fn start_nix_listener(callbacks: &Callbacks) -> Result<(), Error> {
             for c in guard.values() {
                 c(&mouse_event);
             }
-            println!("{}", guard.values().len());
         }
     });
 
